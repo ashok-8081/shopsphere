@@ -1,13 +1,48 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { logout } from "../redux/slices/authSlice";
 
 const Navbar = () => {
+  const { userInfo } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/");
+  };
   return (
-    <>
-      <Link to="/">Home</Link>
-      <Link to="/login">Login</Link>
-      <Link to="/cart">Cart</Link>
-    </>
+    <nav className="bg-gray-900 text-white px-6 py-4 flex justify-between items-center">
+      <Link to="/" className="text-xl font-bold text-yellow-400">
+        ShopSphere
+      </Link>
+      <div className="flex gap-6 items-center">
+        <Link to="/cart" className="hover:text-yellow-400 transition-colors">
+          Cart
+        </Link>
+        {userInfo ? (
+          <div className="flex gap-4 items-center">
+            <span className="text-yellow-400 font-semibold">
+              Hi, {userInfo.name}
+            </span>
+            <button
+              onClick={handleLogout}
+              className="bg-red-500 text-white px-4 py-2 rounded font-semibold hover:bg-red-400 transition-colors"
+            >
+              Logout
+            </button>
+          </div>
+        ) : (
+          <Link
+            to="/login"
+            className="bg-yellow-400 text-gray-900 px-4 py-2 rounded font-semibold hover:bg-yellow-300 transition-colors"
+          >
+            Login
+          </Link>
+        )}
+      </div>
+    </nav>
   );
 };
 

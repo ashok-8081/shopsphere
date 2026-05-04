@@ -1,5 +1,6 @@
 import Product from "../models/productModel.js";
 
+
 // @desc GET all prod
 // @route GET /api/products
 // @access Public
