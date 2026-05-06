@@ -9,6 +9,7 @@ import HomePage from "./pages/HomePage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import CartPage from "./pages/CartPage.jsx";
 import RegisterPage from "./pages/RegisterPage.jsx";
+import ProductPage from "./pages/ProductPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
         path: "/register",
         element: <RegisterPage />,
       },
+      {
+        path: '/product/:id',
+        element: <ProductPage />
+      },
     ],
   },
 ]);
@@ -42,3 +47,4 @@ createRoot(document.getElementById("root")).render(
     </Provider>
   </StrictMode>,
 );
+

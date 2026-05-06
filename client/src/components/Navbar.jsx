@@ -5,6 +5,7 @@ import { logout } from "../redux/slices/authSlice";
 
 const Navbar = () => {
   const { userInfo } = useSelector((state) => state.auth);
+  const { cartItems } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -18,8 +19,16 @@ const Navbar = () => {
         ShopSphere
       </Link>
       <div className="flex gap-6 items-center">
-        <Link to="/cart" className="hover:text-yellow-400 transition-colors">
+        <Link
+          to="/cart"
+          className="hover:text-yellow-400 transition-colors relative"
+        >
           Cart
+          {cartItems.length > 0 && (
+            <span className="absolute -top-2 -right-4 bg-yellow-400 text-gray-900 text-xs rounded-full w-5 h-5 flex justify-center items-center font-bold">
+              {cartItems.length}
+            </span>
+          )}
         </Link>
         {userInfo ? (
           <div className="flex gap-4 items-center">

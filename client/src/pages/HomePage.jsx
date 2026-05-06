@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../utils/axiosInstance";
+import { Link } from "react-router-dom";
+
 
 const HomePage = () => {
   const [products, setProducts] = useState([]);
@@ -59,9 +61,12 @@ const HomePage = () => {
               <span className="text-xl font-bold text-gray-900">
                 ₹{product.price}
               </span>
-              <button className="bg-yellow-400 text-gray-900 px-3 py-1 rounded font-semibold hover:bg-yellow-300 transition-colors text-sm">
+              <Link
+                to={`/product/${product._id}`}
+                className="bg-yellow-400 text-gray-900 px-3 py-1 rounded font-semibold hover:bg-yellow-300 transition-colors text-sm"
+              >
                 View Details
-              </button>
+              </Link>
             </div>
           </div>
         ))}
