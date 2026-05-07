@@ -32,6 +32,7 @@ const ProductPage = () => {
     dispatch(
       addToCart({
         _id: product._id,
+        product: product._id,
         name: product.name,
         image: product.image,
         price: product.price,
