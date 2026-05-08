@@ -12,8 +12,10 @@ import RegisterPage from "./pages/RegisterPage.jsx";
 import ProductPage from "./pages/ProductPage.jsx";
 import CheckoutPage from "./pages/CheckoutPage.jsx";
 import OrderPage from "./pages/OrderPage.jsx";
-import AdminRoute from './components/AdminRoute.jsx'
-import AdminDashboard from './pages/admin/AdminDashboard.jsx'
+import AdminRoute from "./components/AdminRoute.jsx";
+import AdminDashboard from "./pages/admin/AdminDashboard.jsx";
+import AdminOrdersPage from "./pages/admin/AdminOrdersPage.jsx";
+import AdminProductsPage from "./pages/admin/AdminProductsPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -49,12 +51,28 @@ const router = createBrowserRouter([
         element: <OrderPage />,
       },
       {
-        path: '/admin',
+        path: "/admin",
         element: (
           <AdminRoute>
             <AdminDashboard />
           </AdminRoute>
-        )
+        ),
+      },
+      {
+        path: "/admin/orders",
+        element: (
+          <AdminRoute>
+            <AdminOrdersPage />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "/admin/products",
+        element: (
+          <AdminRoute>
+            <AdminProductsPage />
+          </AdminRoute>
+        ),
       },
     ],
   },
