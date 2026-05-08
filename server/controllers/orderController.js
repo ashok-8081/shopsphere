@@ -52,7 +52,7 @@ const getMyOrders = async (req, res, next) => {
 // @access  Private
 const getOrderById = async (req, res, next) => {
   try {
-    const order = await Order.findByIn(req.params.id).pupulate(
+    const order = await Order.findById(req.params.id).populate(
       "user",
       "name email",
     );

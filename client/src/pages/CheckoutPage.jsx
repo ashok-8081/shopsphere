@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../utils/axiosInstance";
@@ -12,6 +12,7 @@ function CheckoutPage() {
   const [state, setState] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const orderIdRef = useRef(null);
 
   const { cartItems, totalPrice } = useSelector((state) => state.cart);
   const { userInfo } = useSelector((state) => state.auth);
@@ -42,6 +43,8 @@ function CheckoutPage() {
         shippingPrice,
         totalPrice: finalTotal,
       });
+      orderIdRef.current = order._id;
+
 
       // Step 2 — Create Razorpay order
       const { data: razorpayData } = await axiosInstance.post(
@@ -74,9 +77,9 @@ function CheckoutPage() {
               razorpay_signature: response.razorpay_signature,
               orderId: order._id,
             });
-
+            console.log("Order ID:", order._id);
             dispatch(clearCart());
-            navigate(`/order/${order._id}`);
+            navigate(`/order/${orderIdRef.current}`);
           } catch (error) {
             setError("Payment verification failed. Contact support.");
           }

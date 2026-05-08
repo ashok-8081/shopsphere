@@ -11,6 +11,7 @@ import CartPage from "./pages/CartPage.jsx";
 import RegisterPage from "./pages/RegisterPage.jsx";
 import ProductPage from "./pages/ProductPage.jsx";
 import CheckoutPage from "./pages/CheckoutPage.jsx";
+import OrderPage from "./pages/OrderPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
       {
         path: "/checkout",
         element: <CheckoutPage />,
+      },
+      {
+        path: "/order/:id",
+        element: <OrderPage />,
       },
     ],
   },
