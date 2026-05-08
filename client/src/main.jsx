@@ -12,6 +12,8 @@ import RegisterPage from "./pages/RegisterPage.jsx";
 import ProductPage from "./pages/ProductPage.jsx";
 import CheckoutPage from "./pages/CheckoutPage.jsx";
 import OrderPage from "./pages/OrderPage.jsx";
+import AdminRoute from './components/AdminRoute.jsx'
+import AdminDashboard from './pages/admin/AdminDashboard.jsx'
 
 const router = createBrowserRouter([
   {
@@ -45,6 +47,14 @@ const router = createBrowserRouter([
       {
         path: "/order/:id",
         element: <OrderPage />,
+      },
+      {
+        path: '/admin',
+        element: (
+          <AdminRoute>
+            <AdminDashboard />
+          </AdminRoute>
+        )
       },
     ],
   },

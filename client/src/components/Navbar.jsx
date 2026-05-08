@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../redux/slices/authSlice";
 
+
+
 const Navbar = () => {
   const { userInfo } = useSelector((state) => state.auth);
   const { cartItems } = useSelector((state) => state.cart);
@@ -35,6 +37,14 @@ const Navbar = () => {
             <span className="text-yellow-400 font-semibold">
               Hi, {userInfo.name}
             </span>
+            {userInfo && userInfo.isAdmin && (
+              <Link
+                to="/admin"
+                className="text-yellow-400 hover:text-yellow-300 font-semibold transition-colors"
+              >
+                Admin
+              </Link>
+            )}
             <button
               onClick={handleLogout}
               className="bg-red-500 text-white px-4 py-2 rounded font-semibold hover:bg-red-400 transition-colors"

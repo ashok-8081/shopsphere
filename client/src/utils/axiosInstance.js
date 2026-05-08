@@ -9,7 +9,6 @@ axiosInstance.interceptors.request.use((config) => {
   //If yes — extracts the token
   //Attaches it to every request header automatically
   const userInfo = localStorage.getItem("userInfo");
-   console.log('Token check:', userInfo ? 'found' : 'NOT FOUND')
 
   if (userInfo) {
     const { token } = JSON.parse(userInfo);
