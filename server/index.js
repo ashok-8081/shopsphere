@@ -1,6 +1,8 @@
-import express from "express"; // const express = require("express"); also can be but this is new way ... to write
+import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import { createServer } from "http";
+import { Server } from "socket.io";
 import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
@@ -8,32 +10,58 @@ import orderRoutes from "./routes/orderRoutes.js";
 import paymentRoutes from "./routes/paymentRoutes.js";
 
 dotenv.config();
-const app = express();
 
-app.use(cors({
-  origin: 'http://localhost:5173',
-  credentials: true,
-}));
+const app = express();
+const httpServer = createServer(app);
+
+export const io = new Server(httpServer, {
+  cors: {
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST"],
+  },
+});
+
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  }),
+);
 app.use(express.json());
 
-app.use("/api/auth", authRoutes);
-
-app.get("/", (req, res, next) => {
+app.get("/", (req, res) => {
   res.send("API is running...");
 });
+
+app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
-const PORT = process.env.PORT || 5000;
 app.use("/api/orders", orderRoutes);
 app.use("/api/payment", paymentRoutes);
+
+io.on("connection", (socket) => {
+  console.log("User connected:", socket.id);
+
+  socket.on("joinRoom", (userId) => {
+    socket.join(userId);
+    console.log(`User ${userId} joined their room`);
+  });
+
+  socket.on("disconnect", () => {
+    console.log("User disconnected:", socket.id);
+  });
+});
+
+const PORT = process.env.PORT || 5000;
 
 const startServer = async () => {
   try {
     await connectDB();
-    app.listen(PORT, () => {
-      console.log(`Server is running on port http://localhost:${PORT}`);
+    httpServer.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
     });
   } catch (error) {
-    console.log(`server failed to start: ${error.message}`);
+    console.log(`Server failed to start: ${error.message}`);
+    process.exit(1);
   }
 };
 

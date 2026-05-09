@@ -1,4 +1,5 @@
 import Order from "../models/orderModel.js";
+import { io } from "../index.js";
 
 // @desc    Create new order
 // @route   POST /api/orders
@@ -91,6 +92,11 @@ const updateOrderToDelivered = async (req, res, next) => {
     order.deliveredAt = Date.now();
 
     const updatedOrder = await order.save();
+    io.to(order.user.toString()).emit("orderDelivered", {
+      orderId: order._id,
+      message: "Your order has been delivered!",
+    });
+
     res.json(updatedOrder);
   } catch (error) {
     res.status(500).json({ message: error.message });
