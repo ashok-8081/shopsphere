@@ -16,12 +16,23 @@ const httpServer = createServer(app);
 
 export const io = new Server(httpServer, {
   cors: {
-    origin: "*",
+    origin: [
+      "http://localhost:5173",
+      "https://shopsphere-frontend-puce.vercel.app",
+    ],
     methods: ["GET", "POST"],
   },
 });
 
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://shopsphere-frontend-puce.vercel.app",
+    ],
+    credentials: true,
+  }),
+);
 app.use(express.json());
 
 app.get("/", (req, res) => {
