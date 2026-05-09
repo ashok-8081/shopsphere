@@ -26,7 +26,7 @@ export const io = new Server(httpServer, {
 
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://shopsphere.vercel.app"],
+    origin: ["http://localhost:5173", "https://shopsphere-frontend-puce.vercel.app/"],
     credentials: true,
   }),
 );
